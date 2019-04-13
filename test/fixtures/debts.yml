@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  amount: 1
+  interest_rate: 1.5
+  min_payment: 1.5
+  user_id: 1
+
+two:
+  type: 
+  amount: 1
+  interest_rate: 1.5
+  min_payment: 1.5
+  user_id: 1
