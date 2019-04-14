@@ -2,18 +2,22 @@ class ApplicationController < ActionController::API
 
 
   def snowball(user)
-    debts = Debt.find_by(user_id: user.id)
+    debts = Debt.all
+    debts = debts.select{|debt| debt.user_id == user.id}
     debts.sort_by! { |debt| debt.amount }
+    
   end
 
-  def avalanche(user)
-    debts = Debt.find_by(user_id: user.id)
+  def credit(user)
+    debts = Debt.all
+    debts = debts.select{|debt| debt.user_id == user.id}
     debts.sort_by! { |debt| debt.amount }
     debts.reverse
   end
 
-  def credit(user)
-    debts = Debt.find_by(user_id: user.id)
+  def avalanche(user)
+    debts = Debt.all
+    debts = debts.select{|debt| debt.user_id == user.id}
     debts.sort_by! { |debt| debt.interest_rate }
   end
 
@@ -28,27 +32,28 @@ class ApplicationController < ActionController::API
 
   def generatePlan(debts, user) 
       returnArray = []
-      while debts.length > 0 
-        returnHash = {}
-        mpr = debts.first.interest_rate / 12
+      puts debts.length
+      returnHash = {}
+       debts.length.times do 
+        returnHash.clear
+        mpr = debts.first.interest_rate / 1200
         min_total = 0
         debts.each do |debt|
           min_total += debt.min_payment
         end
-        targetPayment = user.income - min_total + debts.first.min_payment
+        targetPayment = user.income - user.expenses - min_total + debts.first.min_payment
         months = monthsTillPayoff(debts.first.amount, targetPayment, mpr)
         returnHash["targetPayment"] = targetPayment
         returnHash["months"] = months 
         returnHash["amount"] = debts.first.amount
-        returnHash["name"] = debts.first.name
         returnHash["debt_type"] = debts.first.debt_type
         returnHash["mpr"] = mpr
-        returnArray.push(returnHash)
+
+        newReturnHash = returnHash.clone
+        returnArray.insert(-1, newReturnHash) 
         debts.shift
-        generatePlan(debts, user)
       end
       returnArray
-    end
   end
 
   def threePlans(user)
@@ -56,9 +61,9 @@ class ApplicationController < ActionController::API
     snowballDebts = snowball(user)
     avalancheDebts = avalanche(user)
     creditDebts = credit(user)
-    plans["avalanche"] = generatePlan(avalancheDebts(user), user)
-    plans["snowball"] = generatePlan(snowballDebts(user), user)
-    plans["credit"] = generatePlan(creditDebts(user), user)
+    plans["avalanche"] = generatePlan(avalancheDebts, user)
+    plans["snowball"] = generatePlan(snowballDebts, user)
+    plans["credit"] = generatePlan(creditDebts, user)
     plans
   end
 end
