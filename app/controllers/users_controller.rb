@@ -9,6 +9,11 @@ class UsersController < ApplicationController
   render json: user
   end
 
+  def login
+    user = User.find_by(params[:username])
+    render json: user
+  end
+
   private 
 
   def user_params(params) 
