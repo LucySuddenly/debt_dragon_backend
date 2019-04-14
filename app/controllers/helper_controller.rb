@@ -10,11 +10,11 @@ class HelperController < ApplicationController
     user = User.find_by(params[:id])
     if user.plan.name == "avalanche" 
       returnValue = generatePlan(avalanche(user), user)
-    elsif user.plan.name == "snowball" 
+    elsif user.plan.name == "Snowball" 
       returnValue = generatePlan(snowball(user), user)
     elsif user.plan.name == "credit"
       returnValue = generatePlan(credit(user), users)
     end
-    returnValue
+    render json: returnValue
   end
 end
