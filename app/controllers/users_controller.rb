@@ -10,13 +10,13 @@ class UsersController < ApplicationController
   end
 
   def login
-    user = User.find_by(params[:username])
+    user = User.find_by(username: params[:username])
     render json: user
   end
 
-  private 
+  private
 
-  def user_params(params) 
+  def user_params(params)
     params.require(:user).permit(:first_name, :last_name, :username, :income, :expenses)
   end
 end
