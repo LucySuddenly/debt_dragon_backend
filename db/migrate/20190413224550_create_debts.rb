@@ -1,7 +1,7 @@
 class CreateDebts < ActiveRecord::Migration[5.2]
   def change
     create_table :debts do |t|
-      t.string :type
+      t.string :debt_type
       t.integer :amount
       t.float :interest_rate
       t.float :min_payment

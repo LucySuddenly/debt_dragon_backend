@@ -12,6 +12,6 @@ class DebtsController < ApplicationController
   private 
 
   def debt_params(params) 
-    params.require(:debt).permit(:type, :amount, :interest_rate, :user_id, :min_payment)
+    params.require(:debt).permit(:debt_type, :amount, :interest_rate, :user_id, :min_payment)
   end
 end

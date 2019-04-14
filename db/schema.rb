@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2019_04_13_224550) do
   enable_extension "plpgsql"
 
   create_table "debts", force: :cascade do |t|
-    t.string "type"
+    t.string "debt_type"
     t.integer "amount"
     t.float "interest_rate"
     t.float "min_payment"

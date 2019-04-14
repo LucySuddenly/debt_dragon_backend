@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+User.create(first_name: "Sky", last_name: "Moon", username: "sunshine2000", expenses: 1600, income: 2000)
+Debt.create(debt_type: "Credit Card", amount: 2000, interest_rate: 19.5, user_id: 1, min_payment: 80)
+Plan.create(user_id: 1, name: "Snowball")
