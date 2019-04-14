@@ -1,7 +1,8 @@
 class HelperController < ApplicationController
 
   def selectPlan
-    user = User.find_by(params[:id])
+    byebug
+    user = User.find_by(user_id: params[:user_id])
     debts = Debt.find_by(user_id: user.id)
     render json: threePlans(user)
   end  
